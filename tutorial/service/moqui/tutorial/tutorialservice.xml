@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+    <!-- Example & Related Services -->
+    <service verb="create" noun="S_Example" displayName="Create an tutorial" type="entity-auto" allow-remote="true">
+        <in-parameters>
+            <auto-parameters include="nonpk"/>
+            <parameter name="S_exampleName" required="true"/>
+            <parameter name="S_exampleDate" required="true"/>
+            <!-- This is automatic based on parameter type: <parameter name="exampleSize"><number-decimal/></parameter> -->
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="pk" required="true"/>
+            <parameter name="S_exampleId" required="true"/>
+
+        </out-parameters>
+    </service>
+    <service verb="update" noun="S_Example" displayName="Update an tutorial" type="entity-auto" allow-remote="true">
+    <in-parameters>
+        <auto-parameters include="pk" required="true"/>
+        <auto-parameters include="nonpk"/>
+<!--
+        <parameter name="S_exampleName"><text-medium/></parameter>
+-->
+    </in-parameters>
+    <out-parameters>
+        <parameter name="S_exampleName" type='String' required="true"/>
+    </out-parameters>
+    </service>
+    <service verb="get" noun="S_Example" displayName="GET an tutorial" type="remote-rest"  allow-remote="true" location="http://localhost:8080/rest/s1/tutorial/S_Example/${S_exampleId}">
+        <in-parameters>
+            <parameter name="S_exampleId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="pk" required="true"/>
+            <auto-parameters include="nonpk"/>
+        </out-parameters>
+    </service>
+</services>
