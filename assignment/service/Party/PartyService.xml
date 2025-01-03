@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-2.1.xsd">
-    <service verb="create" noun="assignment" type="entity-auto">
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-2.1.xsd">
+    <service verb="create" noun="assignment.Party" displayName="Create a party" type="entity-auto" allow-remote="true">
         <in-parameters>
-            <auto-parameters include="all"/>
+            <auto-parameters include="nonpk"/>
+            <parameter name="partyId" required="true"/>
         </in-parameters>
         <out-parameters>
             <auto-parameters include="pk" required="true"/>
+            <parameter name="partyId" required="true"/>
         </out-parameters>
     </service>
+
+
+    <service verb="create" noun="ContactMech" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="True"/>
+            <parameter name="contactMechType"/>
+            <parameter name="streetAddress"/>
+            <parameter name="contactMechId"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name = "contactMechId"/>
+        </out-parameters>
+        <actions>
+            <entity-find-one entity-name="assignment.ContactMech" value-field="partyId">
+                <field-map field-name="partyId" from="Party"/>
+                <if condition="partyId">
+                    <service-call name="create#assignment.ContactMech" in-map="context" out-map="context"/>
+                </if>
+            </entity-find-one>
+
+
+
+            <!--   <econdition field-name="partyId" from="partyId"/>
+          </entity-find>
+          <if condition="partyList">
+              <service-call name="create#assignment.ContactMech" in-map="context" out-map="context"/>
+          </if> -->
+        </actions>
+
+    </service>
+
 </services>

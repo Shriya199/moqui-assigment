@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="demo">
+    <assignment.Party partyId="1" partyType="Employee" first_name = 'SHriya' last_name = "pandey" />
+</entity-facade-xml>

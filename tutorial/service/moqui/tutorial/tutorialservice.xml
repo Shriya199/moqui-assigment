@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+
+    <service verb="create" noun="S_Example" displayName="Create an tutorial" type="entity-auto" allow-remote="true">
+        <in-parameters>
+            <auto-parameters include="nonpk"/>
+            <parameter name="S_exampleName" required="true"/>
+            <parameter name="S_exampleDate" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="pk" required="true"/>
+            <parameter name="S_exampleId" required="true"/>
+
+        </out-parameters>
+    </service>
+    <service verb="update" noun="S_Example" displayName="Update an tutorial" type="entity-auto" allow-remote="true">
+    <in-parameters>
+        <auto-parameters include="pk" required="true"/>
+        <auto-parameters include="nonpk"/>
+<!--
+        <parameter name="S_exampleName"><text-medium/></parameter>
+-->
+    </in-parameters>
+    <out-parameters>
+        <parameter name="S_exampleName" type='String' required="true"/>
+    </out-parameters>
+    </service>
+    <service verb="get" noun="S_Example" displayName="GET an tutorial" type="remote-rest"  allow-remote="true" location="http://localhost:8080/rest/s1/tutorial/S_Example/${S_exampleId}">
+        <in-parameters>
+            <parameter name="S_exampleId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="pk" required="true"/>
+            <auto-parameters include="nonpk"/>
+        </out-parameters>
+    </service>
+
+    <service verb = 'get' noun="PersonsWhoAreFemale" displayName="FemalePerson" allow-remote="true" type="inline">
+        <in-parameters>
+            <!--No Input Parameter-->
+        </in-parameters>
+        <out-parameters>
+            <parameter name="FemalePersonList"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="Person" list="FemalePersonList">
+                <econdition field-name="gender" value="F"/>
+            </entity-find>
+        </actions>
+    </service>
+    <service verb = 'get' noun="LatestOrder" displayName="OrdersList" allow-remote="true" type="inline">
+<in-parameters>
+
+</in-parameters>
+        <out-parameters>
+            <parameter name="ordersList"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="OrderHeader" list="ordersList">
+            <order-by field-name="PlacedDate" descending="true"/>
+            </entity-find>
+        </actions>
+    </service>
+    <service verb="get" noun="MarriedPersons" displayName="MarsMarriedPersons" allow-remote="true" type="inline">
+        <in-parameters>
+            <!--No Input Parameter-->
+        </in-parameters>
+        <out-parameters>
+            <parameter name="personsList" type="list"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="Person" list="personsList">
+                <econdition field-name="maritalStatusEnumId" value="MarsMarried"/>
+            </entity-find>
+        </actions>
+    </service>
+
+    <service verb="get" noun="Order" displayName="orderDetails" allow-remote="true" type="inline">
+        <in-parameters>
+            <parameter name="orderId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="ordersList"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="mantle.order.OrderHeader" list="ordersList">
+                <econdition field-name="orderId"/>
+            </entity-find>
+        </actions>
+        <!--Find the Order Header details for a given orderId.
+a. Service name - verb="get" noun="Order"
+b. In parameters - orderId
+c. Out parameters - orderDetails-->
+    </service>
+    <service verb="get" noun="OrderHeaders" displayName="orderDetails" allow-remote="true" type="inline">
+        <in-parameters>
+            <!--No Input Parameter-->
+        </in-parameters>
+        <out-parameters>
+            <parameter name="orderHeaderDetails"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="mantle.order.OrderHeader" list="orderHeaderDetails">
+            <econdition field-name="grandTotal" operator="greater" value="50"/>
+            </entity-find>
+        </actions>
+        <!--Find all Order Header records with the grandTotal greater than 50.
+a. Service name - verb="get" noun="OrderHeaders"
+b. Out parameters - orderHeaderDetails-->
+    </service>
+    <service verb="get" noun="OrderItems" displayName="orderItemDetails" allow-remote="true" type="inline">
+    <in-parameters>
+        <!--NO input-->
+    </in-parameters>
+        <out-parameters>
+                 <parameter name="orderItemList" required="true"/>
+        </out-parameters>
+<actions>
+    <entity-find entity-name="mantle.order.OrderItem" list="orderItemList">
+        <econdition field-name="orderId" value="100102"/>
+        <econdition field-name="orderPartSeqId" value="01"/>
+    </entity-find>
+</actions>
+        <!--List all Order Item details for the order with orderId, 100102 and
+orderPartSeqId, 01.
+a. Service name - verb="get" noun="OrderItems"
+b. Out parameters - orderItemDetails/service>-->
+    </service>
+    <service verb="get" noun="OrderParts" displayName="OrderParts" allow-remote="true" type="inline">
+        <in-parameters>
+            <!--NO input-->
+        </in-parameters>
+        <out-parameters>
+            <parameter name="OrderPartDetails"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="OrderPart" list="OrderPartDetails">
+                <econdition field-name="partTotal" operator="less-equals" value="20"/>
+            </entity-find>
+        </actions>
+        <!--Find all Order Parts with partTotal less than equals to 20.
+a. Service name - verb="get" noun="OrderParts"
+b. Out parameters - orderPartDetails-->
+
+    </service>
+    <service verb="get" noun="OrderPartRecord" displayName="OrderPartRecord" allow-remote="true" type="inline">
+        <in-parameters>
+            <!--no input-->
+        </in-parameters>
+        <out-parameters>
+            <parameter name="orderPartRecord"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="OrderPart" list="orderPartRecord">
+                <econdition field-name="facilityId" value="ZIRET_WH"/>
+                <select-field field-name="orderId"/>
+                <select-field field-name="facilityId"/>
+                <select-field field-name="orderPartSeqId"/>
+                <select-field field-name="partName"/>
+                <select-field field-name="customerPartyId"/>
+            </entity-find>
+        </actions>
+    </service>
+             <!--Find all Order Part records assigned to the facility with ZIRET_WH value.
+a. The entity find should return data for only the below fields of
+OrderPart:
+i. the orderId
+ii. orderPartSeqId
+iii. facilityId
+iv. partName
+v. customerPartyId-->
+<service verb="get" noun="OrderPartsCount" displayName="records" allow-remote="true" type="inline">
+    <in-parameters>
+        <!--NO input-->
+    </in-parameters>
+    <out-parameters>
+<parameter name="OrderPartsCount"/>
+    </out-parameters>
+    <actions>
+        <entity-find-count entity-name="OrderPart" count-field="OrderPartsCount">
+            <econdition field-name="customerPartyId" value="CustJqp"/>
+        </entity-find-count>
+    </actions>
+</service>
+         <!-- Find the count of order parts for the customer PartyId, “CustJqp”.
+a. Service name - verb="get" noun="OrderPartsCount"
+b. Out parameters - orderPartsCount-->
+    <service verb="get" noun="OrderPartsInfo" displayName="OrderpartInfo" allow-remote="true" type="inline">
+        <in-parameters>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="orderPartsList"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="mantle.order.OrderPart" list="orderPartsList">
+                <econditions combine="and">
+                    <econdition field-name="shipmentMethodEnumId" value="ShMthNextDay"/>
+                    <econdition field-name="facilityId" value="ZIRET_WH"/>
+                </econditions>
+            </entity-find>
+        </actions>
+    </service>
+        <!--Find all unique Order Parts with shipmentMethodEnumId value as
+“ShtMthGround” and facilityId as “ZIRET_WH”.
+a. Service name - verb="get" noun="OrderPartsInfo"
+b. Out parameters - orderPartsList-->
+    </service>
+
+
+
+        <!--  <service verb="get" noun="LatestOrders" type="inline"
+                   location="component://your-component-name/service/org/example/OrderServices.xml"
+                   auth="true">
+              <out-parameters>
+                  <parameter name="ordersList" type="List"/>
+              </out-parameters>
+              <actions>
+                  &lt;!&ndash; Find all order headers, sorted by orderDate in descending order &ndash;&gt;
+                  <entity-find entity-name="OrderHeader" list="ordersList">
+                      <order-by field-name="orderDate" descending="true"/>
+                  </entity-find>
+              </actions>
+          </service>
+      -->

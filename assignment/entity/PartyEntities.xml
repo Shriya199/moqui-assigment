@@ -11,23 +11,15 @@
         <field name="lastName" type="text-short"/>
     </entity>
 
-    <entity entity-name="PartyType" package="assignment">
-        <field name="partyTypeId" type="id"/>
-        <field name="description" type="text-medium"/>
-        <relationship type="one" related="assignment.partyEntities.Party">
-            <key-map field-name="partyTypeId"/>
-        </relationship>
-    </entity>
-
     <entity entity-name="ContactMech" package="assignment">
-        <field name="partyId" type="id" is-pk="true"/>
+        <field name="partyId" type="id"/>
         <field name="contactMechId" is-pk="true" type="id"/>
         <field name="contactMechType" type="text-medium"/>
         <field name="streetAddress" type="text-long"/>
         <field name="city" type="text-medium"/>
         <field name="state" type="text-medium"/>
-        <relationship type="one" fk-name="ContactMech_party" related="assignment.partyEntities.Party">
-            <key-map field-name="partyId"/>
+        <relationship type="one" fk-name="ContactMech_party" related="assignment.Party">
+            <key-map field-name="partyId" related="partyId"/>
         </relationship>
     </entity>
 
@@ -36,7 +28,7 @@
         <field name="productName" type="id"/>
         <field name="colour" type="text-medium"/>
         <field name="size" type="text-medium"/>
-        <relationship type="many" fk-name="product_orderItem" related="assignment.partyEntities.OrderItem">
+        <relationship type="many" fk-name="product_orderItem" related="assignment.OrderItem">
             <key-map field-name="productId" related="productId"/>
         </relationship>
     </entity>
@@ -47,10 +39,10 @@
         <field name="partyId" type="id"/>
         <field name="shippingContactMechId" type="id"/>
         <field name="billingContacMechId" type="id"/>
-        <relationship type="one" fk-name="order_party" related="assignment.partyEntities.Party">
+        <relationship type="one" fk-name="order_party" related="assignment.Party">
             <key-map field-name="partyId"/>
         </relationship>
-        <relationship type="many" fk-name="order_orderItem" related="assignment.partyEntities.OrderItem">
+        <relationship type="many" fk-name="order_orderItem" related="assignment.OrderItem">
             <key-map field-name="orderId" related="orderId"/>
         </relationship>
     </entity>
@@ -61,7 +53,7 @@
         <field name="productId" type="id"/>
         <field name="quantity" type="number-integer"/>
         <field name="status" type="text-medium"/>
-        <relationship type="one" fk-name="order_orderItem" related="assignment.partyEntities.OrderHeader">
+        <relationship type="one" fk-name="order_orderItem" related="assignment.OrderHeader">
             <key-map field-name="orderId"/>
         </relationship>
     </entity>
