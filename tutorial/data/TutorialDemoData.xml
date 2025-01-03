@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-facade-xml type="demo">
+    <tutorial.S_Example S_xampleId="TestOne" S_exampleName ="Sim" S_exampleDate = '2024-09-14' />
+</entity-facade-xml>
+
+
+<!-- <entity entity-name="S_Example" package="tutorial">
+        <field name="S_exampleId" type="id" is-pk="true"/>
+        <field name="S_exampleName" type="text-medium"/>
+        <field name="S_exampleDate" type="date"/>-->

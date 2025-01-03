@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-3.xsd">
+    <!-- ========================================================= -->
+
+    <entity entity-name="Party" package="assignment">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="partyTypeId" type="id"/>
+        <field name="firstName" type="text-medium"/>
+        <field name="lastName" type="text-short"/>
+    </entity>
+
+    <entity entity-name="PartyType" package="assignment">
+        <field name="partyTypeId" type="id"/>
+        <field name="description" type="text-medium"/>
+        <relationship type="one" related="assignment.partyEntities.Party">
+            <key-map field-name="partyTypeId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="ContactMech" package="assignment">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="contactMechId" is-pk="true" type="id"/>
+        <field name="contactMechType" type="text-medium"/>
+        <field name="streetAddress" type="text-long"/>
+        <field name="city" type="text-medium"/>
+        <field name="state" type="text-medium"/>
+        <relationship type="one" fk-name="ContactMech_party" related="assignment.partyEntities.Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="Product" package="assignment">
+        <field name="productID" type="id" is-pk="true"/>
+        <field name="productName" type="id"/>
+        <field name="colour" type="text-medium"/>
+        <field name="size" type="text-medium"/>
+        <relationship type="many" fk-name="product_orderItem" related="assignment.partyEntities.OrderItem">
+            <key-map field-name="productId" related="productId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="OrderHeader" package="assignment">
+        <field name="orderId" type="id" is-pk="true"/>
+        <field name="orderDate" type="date-time"/>
+        <field name="partyId" type="id"/>
+        <field name="shippingContactMechId" type="id"/>
+        <field name="billingContacMechId" type="id"/>
+        <relationship type="one" fk-name="order_party" related="assignment.partyEntities.Party">
+            <key-map field-name="partyId"/>
+        </relationship>
+        <relationship type="many" fk-name="order_orderItem" related="assignment.partyEntities.OrderItem">
+            <key-map field-name="orderId" related="orderId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="OrderItem" package="assignment">
+        <field name="orderID" type="id"/>
+        <field name="orderItemSeqId" type="id"/>
+        <field name="productId" type="id"/>
+        <field name="quantity" type="number-integer"/>
+        <field name="status" type="text-medium"/>
+        <relationship type="one" fk-name="order_orderItem" related="assignment.partyEntities.OrderHeader">
+            <key-map field-name="orderId"/>
+        </relationship>
+    </entity>
+</entities>

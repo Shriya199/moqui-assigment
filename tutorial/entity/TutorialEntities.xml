@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-2.1.xsd">
+    <entity entity-name="S_Example" package="tutorial">
+        <field name="S_exampleId" type="id" is-pk="true"/>
+        <field name="S_exampleName" type="text-medium"/>
+        <field name="S_exampleDate" type="date"/>
+
+
+    </entity>
+</entities>
+
+
+<!--
+
+&#45;&#45; The new entity, say “Example” should be able to map the following
+        attributes with appropriate data types:
+        - exampleId (Primary Key)
+        - exampleName
+        - exampleDate
+        - examplePrice
+        - exampleQuantity
+-->
