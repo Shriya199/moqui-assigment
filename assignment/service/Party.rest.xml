@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding ="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/rest-api-3.xsd"
+          name="Party" displayName="Assignment REST API" version="2.0.0">
+    <resource name="Party" require-authentication="anonymous-all">
+        <method type="GET">
+            <entity name="Party" operation="list"/>
+        </method>
+    </resource>
+</resource>
