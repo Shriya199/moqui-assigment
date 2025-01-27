@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+        require-authentication="anonymous-all">
+    <transition name="createParty">
+        <service-call name="create#task.Party"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="createPerson">
+        <service-call name="create#task.Person"/>
+        <default-response url="."/>
+
+
+        </transition>
+    <actions>
+        <entity-find entity-name="task.Party" list="partyList">
+            <search-form-inputs/></entity-find>
+    </actions>
+    <widgets>
+        <container-dialog id="CreateParty" button-text="Create Party">
+            <form-single name="CreateParty" transition="createParty">
+                <auto-fields-entity entity-name="task.Party" field-type="edit"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+        </container-dialog>
+        <form-list name="ListOfParty" list="partylist" header-dialog="true" skip-form="true">
+            <auto-fields-entity entity-name="task.Party" field-type="edit"/>
+        </form-list>
+
+        <container-dialog id="CreatePerson" button-text="Create Person">
+            <form-single name="Create person" transition="createPerson" >
+                <auto-fields-entity entity-name="task.Person" field-type="edit"/>
+                <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+            </form-single>
+            <form-list name="ListOfPerson" list="personlist" header-dialog="true" skip-form="true">
+                <auto-fields-entity entity-name="task.Person" field-type="edit"/>
+            </form-list>
+        </container-dialog>
+    </widgets>
+</screen>

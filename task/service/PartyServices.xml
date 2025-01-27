@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+ <service verb="create" noun="task.Party">
+
+     <in-parameters>
+         <auto-parameters entity-name="Party" required="true"/>
+     </in-parameters>
+     <out-parameters>
+         <parameter name="partyId"/>
+     </out-parameters>
+ </service>
+
+    <service verb="create" noun="Person">
+     <in-parameters>
+         <parameter name="firstName"/>
+         <auto-parameters entity-name="task.Party"/>
+     </in-parameters>
+     <out-parameters>
+         <parameter name="partyId" entity-name="task.Person" />
+     </out-parameters>
+     <actions>
+     <service-call name="create#task.Party" in-map="context + [partyTypeEnumId:'PtyPerson']" out-map="context"/>
+
+         <service-call name="create#task.Person" in-map="context" out-map="context"/>
+
+     </actions>
+ </service>
+</services>
